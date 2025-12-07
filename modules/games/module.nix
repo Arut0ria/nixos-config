@@ -7,6 +7,7 @@ let
       ];
 
       config.emulation-module = {
+        enable = lib.mkDefault true;
         retroarch.enable = lib.mkDefault true;
         pcsx2.enable = lib.mkDefault true;
         rpcs3.enable = lib.mkDefault true;

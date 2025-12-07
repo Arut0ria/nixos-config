@@ -3,6 +3,9 @@
 , lib
 , ...
 }:
+let
+  cfg = config.emulation-module;
+in
 {
   options = {
     emulation-module.enable = lib.mkEnableOption "Enables emulation modules (retroarch, pcsx, ...)";
@@ -12,20 +15,22 @@
     emulation-module.ryubing.enable = lib.mkEnableOption "Enables ryubing (switch emulator).";
   };
 
-  config = lib.mkIf config.emulation-module.enable {
-    environment.systemPackages = lib.mkMerge (with pkgs;[
-      (lib.optionals (config.emulation-module.retroarch.enable) (retroarch.withCores (cores: with cores; [
-        beetle-psx-hw
-        beetle-psx
-        citra
-        snes9x2010
-        nestopia
-        picodrive
-        desmume
-      ])))
-      (lib.optionals (config.emulation-module.rpcs3.enable) [ rpcs3 ])
-      (lib.optionals (config.emulation-module.pcsx2.enable) [ pcsx2 ])
-      (lib.optionals (config.emulation-module.ryubing.enable) [ ryubing ])
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = lib.mkMerge (with pkgs; [
+      (lib.optionals cfg.retroarch.enable [
+        (retroarch.withCores (cores: with cores; [
+          beetle-psx-hw
+          beetle-psx
+          citra
+          snes9x2010
+          nestopia
+          picodrive
+          desmume
+        ]))
+      ])
+      (lib.optionals cfg.rpcs3.enable [ rpcs3 ])
+      (lib.optionals cfg.pcsx2.enable [ pcsx2 ])
+      (lib.optionals cfg.ryubing.enable [ ryubing ])
       [ melonDS ]
     ]);
   };
