@@ -10,13 +10,14 @@ in
 
     sharedModules = [
       inputs.plasma-manager.homeModules.plasma-manager
+      inputs.nvf.homeManagerModules.default
     ];
 
     users.${me.username} = {
       home = {
         username = "${me.username}";
         homeDirectory = "/home/${me.username}";
-        stateVersion = "25.05";
+        stateVersion = "25.11";
       
         # Adding face to home
         file.".face.icon" = lib.mkIf (builtins.hasAttr "res" pkgs)  {

@@ -16,7 +16,7 @@ in
       home = {
         username = "${me.username}";
         homeDirectory = "/home/${me.username}";
-        stateVersion = "25.05";
+        stateVersion = "25.11";
       };
 
       imports = [

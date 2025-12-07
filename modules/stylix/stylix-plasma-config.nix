@@ -52,7 +52,7 @@ in
       };
 
       targets = {
-        grub.useImage = true;
+        grub.useWallpaper = true;
       };
 
       override.base05 = "FFFFFF";

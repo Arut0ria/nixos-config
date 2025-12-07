@@ -50,7 +50,7 @@ in
   ];
 
   # nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   users.users = {
     ${me.username} = {

@@ -1,4 +1,4 @@
-{ system, pkgs, config, lib, ... }:
+{ config, lib, ... }:
 {
   options = {
     launchers-module.enable = lib.mkEnableOption "Enables steam";

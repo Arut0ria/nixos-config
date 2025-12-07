@@ -37,8 +37,8 @@ in
 
         # Overlays
         overlays = [
-          (final: prev: { getagal = inputs.getagal.packages.${final.system}.default; })
-          (final: prev: { kwin-effects-forceblur = inputs.kwin-effects-forceblur.packages.${final.system}.default; })
+          (final: prev: { getagal = inputs.getagal.packages.${final.stdenv.hostPlatform.system}.default; })
+          (final: prev: { kwin-effects-forceblur = inputs.kwin-effects-forceblur.packages.${final.stdenv.hostPlatform.system}.default; })
           (final: prev: { res = (import ./res/res.nix { inherit (final) pkgs; }); })
         ];
 
