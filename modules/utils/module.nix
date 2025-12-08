@@ -16,5 +16,13 @@
 
       config.nvidia-module.enable = lib.mkDefault true;
     };
+
+    caching-module = {
+      imports = [
+        ./caching-module.nix
+      ];
+
+      config.caching-module.enable = lib.mkDefault true;
+    };
   };
 }

@@ -18,6 +18,7 @@ in
       nixosModules.nvidia-module
       nixosModules.games-module
       nixosModules.stylix-plasma-config
+      nixosModules.caching-module
 
       (import ../fonts.nix { inherit pkgs lib; })
 
