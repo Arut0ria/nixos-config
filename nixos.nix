@@ -4,13 +4,20 @@
 , ...
 }:
 let
-  generateConfig = (sysName: sysConfig:
-    withSystem sysName ({ pkgs, ... }: inputs.nixpkgs.lib.nixosSystem {
+  generateConfig = ({ sysName, sysConfig, pkgsAttr ? { } }:
+    withSystem sysName ({ pkgsConfig, ... }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         # Nixpkgs
         inputs.nixpkgs.nixosModules.readOnlyPkgs
-        { nixpkgs.pkgs = pkgs; }
+        (
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit (inputs.nixpkgs.lib.recursiveUpdate pkgsConfig pkgsAttr) system overlays config;
+            };
+          in
+          { nixpkgs.pkgs = pkgs; }
+        )
 
         # Home manager
         inputs.home-manager.nixosModules.home-manager
@@ -28,11 +35,8 @@ in
 {
   perSystem =
     { system, lib, config, ... }:
-    # let
-    #   stylix-overlays = import (builtins.toPath "${inputs.stylix.outPath}/stylix/autoload.nix") { inherit lib; } "overlay";
-    # in
     {
-      _module.args.pkgs = import inputs.nixpkgs {
+      _module.args.pkgsConfig = {
         inherit system;
 
         # Overlays
@@ -62,14 +66,26 @@ in
       });
 
       # Defining configs
-      nixosConfigurations.nixos-desktop = generateConfig "x86_64-linux" [
-        currentModules.config-module
-        ./hosts/desktop/configuration.nix
-      ];
+      nixosConfigurations.nixos-desktop = generateConfig {
+        sysName = "x86_64-linux";
+        
+        sysConfig = [
+          currentModules.config-module
+          ./hosts/desktop/configuration.nix
+        ];
 
-      nixosConfigurations.nixos-vm = generateConfig "x86_64-linux" [
-        currentModules.config-module
-        ./hosts/vm/configuration.nix
-      ];
+        pkgsAttr = {
+          config.cudaSupport = true;
+          config.cudaVersion = "12";
+        };
+      };
+
+      nixosConfigurations.nixos-vm = generateConfig {
+        sysName = "x86_64_linux";
+        sysConfig = [
+          currentModules.config-module
+          ./hosts/vm/configuration.nix
+        ];
+      };
     };
 }
