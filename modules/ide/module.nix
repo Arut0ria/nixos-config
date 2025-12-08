@@ -11,7 +11,7 @@ let
 
     neovim-module = {
       imports = [
-        ./nvim/nvf.nix
+        ./nvim/nixvim.nix
       ];
 
       config.neovim-module.enable = lib.mkDefault true;

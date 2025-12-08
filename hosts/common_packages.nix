@@ -4,11 +4,15 @@ with pkgs; [
   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   wget
 
+  # Formatters
   nixpkgs-fmt
   nixfmt-rfc-style
   black
   deno
   djlint
+
+  tree-sitter
+  ripgrep
 
   vlc
   blender
@@ -31,7 +35,6 @@ with pkgs; [
   winetricks
   wineWowPackages.waylandFull
 
-  ags
   gimp
   inkscape
   easyeffects

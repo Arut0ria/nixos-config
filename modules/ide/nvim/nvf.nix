@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  cfg = config.neovim-module;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.neovim-module;
+in {
   options = {
     neovim-module = {
       enable = lib.mkEnableOption "Enable nvf config module";
@@ -42,7 +44,7 @@ in
           };
 
           autocomplete = {
-            nvim-cmp = { enable = true; };
+            nvim-cmp = {enable = true;};
           };
 
           git = {
@@ -54,7 +56,7 @@ in
               enable = true;
               setupOpts = {
                 formater_by_ft = {
-                  nix = [ "nixfmt" ];
+                  nix = ["nixfmt"];
                 };
               };
             };
