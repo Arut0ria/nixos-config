@@ -81,7 +81,7 @@ in
       };
 
       nixosConfigurations.nixos-vm = generateConfig {
-        sysName = "x86_64_linux";
+        sysName = "x86_64-linux";
         sysConfig = [
           currentModules.config-module
           ./hosts/vm/configuration.nix

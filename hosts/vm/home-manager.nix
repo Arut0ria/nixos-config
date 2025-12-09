@@ -10,6 +10,7 @@ in
 
     sharedModules = [
       inputs.plasma-manager.homeModules.plasma-manager
+      inputs.nixvim.homeModules.nixvim
     ];
 
     users.${me.username} = {
