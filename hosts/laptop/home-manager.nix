@@ -36,13 +36,10 @@ in
         homeModules.programs-module
 
         homeModules.games-module
-
-        {
-          config.zsh-module.charPixelSize = 10 * 1.333;
-        }
       ];
 
       # Need to test zsh-module directly without config -> here
+      zsh-module.charPixelSize = config.stylix.fonts.sizes.terminal * 1.666;
     };
   };
 }
