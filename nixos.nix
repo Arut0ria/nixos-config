@@ -48,7 +48,6 @@ in
 
         config = {
           allowUnfree = true;
-          nvidia.acceptLicense = true;
         };
       };
     };
@@ -77,7 +76,17 @@ in
         pkgsAttr = {
           config.cudaSupport = true;
           config.cudaVersion = "12";
+          config.nvidia.acceptLicense = true;
         };
+      };
+
+      nixosConfigurations.nixos-laptop = generateConfig {
+        sysName = "x86_64-linux";
+
+        sysConfig = [
+          currentModules.config-module
+          ./hosts/laptop/configuration.nix
+        ];
       };
 
       nixosConfigurations.nixos-vm = generateConfig {
