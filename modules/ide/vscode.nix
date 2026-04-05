@@ -21,6 +21,8 @@
         llvm-vs-code-extensions.vscode-clangd
         ms-toolsai.jupyter
         ms-python.black-formatter
+        astro-build.astro-vscode
+        svelte.svelte-vscode
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "vscode-tailwindcss";
