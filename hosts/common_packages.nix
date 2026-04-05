@@ -1,5 +1,6 @@
 { pkgs, ... }:
-with pkgs; [
+with pkgs;
+[
   git
   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   wget
@@ -10,6 +11,7 @@ with pkgs; [
   black
   deno
   djlint
+  eslint_d
 
   tree-sitter
   ripgrep
@@ -38,7 +40,11 @@ with pkgs; [
   gimp
   inkscape
   easyeffects
+  lmms
+  vital
 
   devenv
   direnv
+
+  wl-clipboard
 ]
