@@ -1,11 +1,11 @@
-{ inputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let
   /**
     To be generic use : pt * 1.333
     Else : pt * (DPI / 72)
     Current good size = 432, ratio of 1.999, need to get DPI properly
   */
-  dpi = 96 * 1.25; # Laptop is 96
+  # dpi = 96 * 1.25; # Laptop is 96
   # char_pixel_size = toString (config.stylix.fonts.sizes.terminal * (dpi / 72.0));
 
   useFastFetchConfig = (builtins.hasAttr "fastfetch" pkgs) && (builtins.hasAttr "getagal" pkgs);
@@ -23,6 +23,8 @@ let
 
     fs # Runnings fastfetchs
   '');
+
+  inherit (config.home) homeDirectory;
 in
 {
   options = {
@@ -52,6 +54,8 @@ in
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
         [ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
+
+        alias copyconfig='sudo cp -r ${homeDirectory}/nixos-config/* /etc/nixos/'
       '' + (fastfetchConfig config.zsh-module.charPixelSize config.zsh-module.getagalPattern);
 
       oh-my-zsh = {
@@ -68,7 +72,7 @@ in
         plugins = [
           {
             name = "romkatv/powerlevel10k";
-            tags = [ as:theme depth:1 ];
+            tags = [ "as:theme" "depth:1" ];
           }
         ];
       };
