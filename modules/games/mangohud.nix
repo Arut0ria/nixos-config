@@ -30,6 +30,7 @@
         frametime = true;
         battery = config.mangohud-module.displayBattery;
         font_scale = lib.mkForce 1;
+        fps_limit = "30,60,90,120";
       };
     };
   };

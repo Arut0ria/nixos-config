@@ -33,6 +33,7 @@ let
         protonup.enable = lib.mkDefault true;
         bottles.enable = lib.mkDefault true;
         heroic.enable = lib.mkDefault true;
+        gamemode.enable = lib.mkDefault true;
       };
     };
 
