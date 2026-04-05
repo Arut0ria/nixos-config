@@ -93,6 +93,12 @@ in
           };
         };
       };
+
+      extraPackages = with pkgs; [
+        eslint_d
+        tree-sitter
+        ripgrep
+      ];
     };
   };
 }

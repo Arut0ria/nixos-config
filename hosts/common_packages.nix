@@ -11,10 +11,6 @@ with pkgs;
   black
   deno
   djlint
-  eslint_d
-
-  tree-sitter
-  ripgrep
 
   vlc
   blender
@@ -25,6 +21,7 @@ with pkgs;
   htop
   libreoffice
   tree
+  imagemagick
 
   sbctl
 
