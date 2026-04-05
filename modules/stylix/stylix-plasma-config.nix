@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.stylix-plasma-config;
 in
@@ -12,13 +17,21 @@ in
 
     stylix-plasma-config.background = lib.mkOption {
       type = lib.types.str;
-      default = if (builtins.hasAttr "res" pkgs) then "${pkgs.res}/res/background_1.png" else "../../res/background_1.png";
+      default =
+        if (builtins.hasAttr "res" pkgs) then
+          "${pkgs.res}/res/background_1.png"
+        else
+          "../../res/background_1.png";
       description = "'Name of the background image to use, add to the res directory / package.";
     };
 
     stylix-plasma-config.logo = lib.mkOption {
       type = lib.types.str;
-      default = if (builtins.hasAttr "res" pkgs) then "${pkgs.res}/res/sddm_icon.png" else "../../res/sddm_icon.png";
+      default =
+        if (builtins.hasAttr "res" pkgs) then
+          "${pkgs.res}/res/sddm_icon.png"
+        else
+          "../../res/sddm_icon.png";
       description = "Name of the logo to use, using pkgs.res as default.";
     };
   };
@@ -33,9 +46,6 @@ in
 
     # Enable stylix
     stylix = {
-      enable = true;
-      autoEnable = true;
-
       fonts.sizes = {
         applications = cfg.fontSize;
       };
@@ -69,8 +79,10 @@ in
         };
 
         monospace = {
-          package = pkgs.jetbrains-mono;
-          name = "JetBrains Mono";
+          package = pkgs.departure-mono;
+          name = "Departure Mono";
+          # package = pkgs.jetbrains-mono;
+          # name = "JetBrains Mono";
         };
 
         emoji = {
