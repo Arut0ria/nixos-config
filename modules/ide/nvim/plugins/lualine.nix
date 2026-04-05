@@ -1,0 +1,5 @@
+{
+  lualine = {
+    enable = true;
+  };
+}

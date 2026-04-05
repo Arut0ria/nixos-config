@@ -1,0 +1,5 @@
+{
+  nvim-surround = {
+    enable = true;
+  };
+}
