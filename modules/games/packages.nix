@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.gaming-packages-module;
   inherit (config) me;
@@ -6,7 +11,7 @@ in
 {
   options = {
     gaming-packages-module = {
-      enable = lib.mkEnableOption "Enables gaming system pacakges (protonup, bottles, heroic, ...).";
+      enable = lib.mkEnableOption "Enables gaming system packages (protonup, bottles, heroic, ...).";
       protonup.enable = lib.mkEnableOption "Enables protonup package.";
       bottles.enable = lib.mkEnableOption "Enables bottles package.";
       heroic.enable = lib.mkEnableOption "Enables Heroic package.";
@@ -15,20 +20,23 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = lib.mkMerge (with pkgs; [
-      (lib.optionals cfg.protonup.enable [ protonup-ng ])
-      (lib.optionals cfg.bottles.enable [ bottles ])
-      (lib.optionals cfg.heroic.enable [ heroic ])
-    ]);
+    environment.systemPackages = lib.mkMerge (
+      with pkgs;
+      [
+        (lib.optionals cfg.protonup.enable [ protonup-ng ])
+        (lib.optionals cfg.bottles.enable [ bottles ])
+        (lib.optionals cfg.heroic.enable [ heroic ])
+      ]
+    );
 
     programs.gamemode = lib.mkIf cfg.gamemode.enable {
       enable = true;
       enableRenice = true;
-      
+
       settings = {
-        general =  {
+        general = {
           softrealtime = "auto";
-          renice = 10;         
+          renice = 10;
         };
       };
     };
