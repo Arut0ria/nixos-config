@@ -21,8 +21,8 @@ in
       };
 
       networkInterface = lib.mkOption {
-        type = lib.types.str;
-        default = "wlo1";
+        type = lib.types.nullOr lib.types.str;
+        default = null;
         description = "The interface to listen to.";
       };
 
@@ -43,10 +43,14 @@ in
         log_level = "warning";
         inotify = "yes";
         wide_links = "yes";
-        network_interface = cfg.settings.networkInterface;
+        network_interface = lib.optional (
+          cfg.settings.networkInterface != null
+        ) cfg.settings.networkInterface;
         port = cfg.settings.port;
-        openFirewall = true;
       };
+
+      # Should open 8200 and 1900 (UPnP)
+      openFirewall = true;
     };
 
     users.users.minidlna = {
