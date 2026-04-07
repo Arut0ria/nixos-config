@@ -5,6 +5,13 @@
     action = ":echo 'double leader'<CR>";
   }
 
+  # Oil - File explorer
+  {
+    mode = "n";
+    key = "<leader>o";
+    action = "<cmd>Oil<CR>";
+  }
+
   # Formatting
   {
     mode = [
