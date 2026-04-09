@@ -4,6 +4,15 @@
     inputs.home-manager.flakeModules.home-manager
   ];
 
+  options = {
+    # Submomdule option to pass wrapper configs
+    flake = inputs.flake-parts.lib.mkSubmoduleOptions {
+      wrapperModules = inputs.nixpkgs.lib.mkOption {
+        default = { };
+      };
+    };
+  };
+
   # options = { };
   config = {
     systems = [
