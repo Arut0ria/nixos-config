@@ -1,6 +1,8 @@
 {
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+    nix-wrappers-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {
@@ -51,26 +53,5 @@
     };
   };
 
-  outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      top@{ config
-      , withSystem
-      , moduleWithSystem
-      , ...
-      }:
-      {
-        debug = false;
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-        ];
-
-        imports = [
-          inputs.home-manager.flakeModules.home-manager
-
-          ./nixos.nix
-        ];
-      }
-    );
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
