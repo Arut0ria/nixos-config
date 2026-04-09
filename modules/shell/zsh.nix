@@ -64,7 +64,9 @@
         extraPackages = with pkgs; [
           git
           zsh-powerlevel10k
-          fastfetch
+          (fastfetch.override {
+            imageSupport = true;
+          })
           chafa
         ];
 
