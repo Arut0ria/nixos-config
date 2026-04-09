@@ -60,79 +60,81 @@
         };
       };
 
-      config = {
-        extraPackages = with pkgs; [
-          git
-          zsh-powerlevel10k
-          (fastfetch.override {
-            imageSupport = true;
-          })
-          chafa
-        ];
+      config =
+        let
+          fastfetch_image = pkgs.fastfetch.override { imageSupport = true; };
+        in
+        {
+          extraPackages = with pkgs; [
+            git
+            zsh-powerlevel10k
+            chafa
+            fastfetch_image
+          ];
 
-        zshAliases =
-          let
-            getagal = self.packages.${pkgs.stdenv.hostPlatform.system}.getagal;
-            fastfetch = lib.getExe pkgs.fastfetch;
-          in
-          {
-            fs = ''
-              img_path=$(${lib.getExe getagal} -s ${getagal}/share/images -n $image_height -p "$pattern")
+          zshAliases =
+            let
+              getagal = self.packages.${pkgs.stdenv.hostPlatform.system}.getagal;
+              fastfetch = lib.getExe fastfetch_image;
+            in
+            {
+              fs = ''
+                img_path=$(${lib.getExe getagal} -s ${getagal}/share/images -n $image_height -p "$pattern")
 
-              if [ -n "$KITTY_WINDOW_ID" ] || [ "$TERM" = "xterm-kitty" ]; then
-                ${fastfetch} --kitty-direct "$img_path"
-              else
-                ${fastfetch} --chafa "$img_path" --chafa-symbols braille --chafa-fg-only
-              fi
+                if [ -n "$KITTY_WINDOW_ID" ] || [ "$TERM" = "xterm-kitty" ]; then
+                  ${fastfetch} --kitty-direct "$img_path"
+                else
+                  ${fastfetch} --chafa "$img_path" --chafa-symbols braille --chafa-fg-only
+                fi
+              '';
+            };
+
+          zshenv = {
+            content = ''
+              ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh;
+              ZSH_CACHE_DIR=${config.zsh-cache-dir};
             '';
           };
 
-        zshenv = {
-          content = ''
-            ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh;
-            ZSH_CACHE_DIR=${config.zsh-cache-dir};
-          '';
+          zshrc = {
+            content = ''
+              # kitty-integration
+              if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
+                export KITTY_SHELL_INTEGRATION="enabled"
+                autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+                kitty-integration
+                unfunction kitty-integration
+              fi
+
+              char_pixel_size=${builtins.toString config.zsh-char-size}
+              fastfetch_number_of_line=18
+              image_height=$(printf %.0f $((fastfetch_number_of_line * char_pixel_size)))
+
+              pattern_file="$HOME/.config/getagal/pattern"
+              mkdir -p "$(dirname "$pattern_file")"
+              [ ! -f "$pattern_file" ] && echo "${config.zsh-getagal-pattern}" > "$pattern_file"
+
+              pattern=$(<~/.config/getagal/pattern)
+
+              bindkey "^[[1;5C" forward-word
+              bindkey "^[[1;5D" backward-word
+
+              # oh-my-zsh
+              plugins=(git docker)
+              source $ZSH/oh-my-zsh.sh
+
+              # p10k
+              source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+              if [ ! -f ~/.p10k.zsh ]; then
+                ZDOTDIR=~ p10k configure
+              else
+                source ~/.p10k.zsh
+              fi
+
+              # fs # Running fastfetch
+            '';
+          };
         };
-
-        zshrc = {
-          content = ''
-            # kitty-integration
-            if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
-              export KITTY_SHELL_INTEGRATION="enabled"
-              autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-              kitty-integration
-              unfunction kitty-integration
-            fi
-
-            char_pixel_size=${builtins.toString config.zsh-char-size}
-            fastfetch_number_of_line=18
-            image_height=$(printf %.0f $((fastfetch_number_of_line * char_pixel_size)))
-
-            pattern_file="$HOME/.config/getagal/pattern"
-            mkdir -p "$(dirname "$pattern_file")"
-            [ ! -f "$pattern_file" ] && echo "${config.zsh-getagal-pattern}" > "$pattern_file"
-
-            pattern=$(<~/.config/getagal/pattern)
-
-            bindkey "^[[1;5C" forward-word
-            bindkey "^[[1;5D" backward-word
-
-            # oh-my-zsh
-            plugins=(git docker)
-            source $ZSH/oh-my-zsh.sh
-
-            # p10k
-            source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-            if [ ! -f ~/.p10k.zsh ]; then
-              ZDOTDIR=~ p10k configure
-            else
-              source ~/.p10k.zsh
-            fi
-
-            # fs # Running fastfetch
-          '';
-        };
-      };
     };
 
   perSystem =
