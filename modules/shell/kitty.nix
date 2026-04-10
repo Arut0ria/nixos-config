@@ -1,5 +1,6 @@
 { ... }:
 {
+
   flake.homeModules.kitty-config =
     { ... }:
     {
