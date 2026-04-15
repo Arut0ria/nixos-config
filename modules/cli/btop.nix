@@ -21,12 +21,12 @@
       config = {
         programs.btop = {
           enable = true;
-          package = if (config.btop-module.useCuda) then (pkgs.btop-cuda) else (pkgs.btop);
+          package = if (config.btop-use-cuda) then (pkgs.btop-cuda) else (pkgs.btop);
           settings = {
             shown_boxes = ''
               proc cpu mem net
             ''
-            + lib.optionalString (config.btop-module.useCuda) "gpu0 gpu1 gpu2 gpu3 gpu4 gpu5";
+            + lib.optionalString (config.btop-use-cuda) "gpu0 gpu1 gpu2 gpu3 gpu4 gpu5";
           };
         };
       };
