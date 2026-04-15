@@ -1,5 +1,0 @@
-{
-  indent-blankline = {
-    enable = true;
-  };
-}
