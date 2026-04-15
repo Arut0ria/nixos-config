@@ -7,7 +7,7 @@
         stylix = {
           fonts.sizes = {
             applications = lib.mkDefault 12;
-            terminal = lib.mkDefault 72;
+            terminal = lib.mkDefault 12;
           };
 
           fonts = {
