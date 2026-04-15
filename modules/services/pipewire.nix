@@ -1,13 +1,14 @@
-{ lib, config, ... }: {
-  options = {
-    pipewire-module.enable = lib.mkEnableOption "Enables pipewire.";
-  };
-
-  config = lib.mkIf config.pipewire-module.enable {
-    services.pipewire = {
-      enable = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
+{ ... }:
+{
+  flake.nixosModules.pipewire =
+    { lib, ... }:
+    {
+      config = {
+        services.pipewire = {
+          enable = lib.mkDefault true;
+          pulse.enable = lib.mkDefault true;
+          wireplumber.enable = lib.mkDefault true;
+        };
+      };
     };
-  };
 }
