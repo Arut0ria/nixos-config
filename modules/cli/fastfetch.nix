@@ -26,7 +26,7 @@
             "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
             logo = {
               height = 18;
-              type = lib.optional (config.fastfetch-useKitty) "kitty-direct";
+              type = lib.mkIf (config.fastfetch-useKitty) "kitty-direct";
               printRemaining = true;
               preserveAspectRatio = true;
               padding = {
