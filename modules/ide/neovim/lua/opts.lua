@@ -23,3 +23,6 @@ o.softtabstop = -1
 o.shiftround = true
 o.expandtab = true
 o.smartindent = true
+
+-- Status line (window sep.)
+o.laststatus = 3
