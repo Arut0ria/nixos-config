@@ -29,6 +29,7 @@
         dlna
         pipewire
         virtualisation
+        devenv
 
         caching
         nvidia-config
@@ -36,6 +37,8 @@
         emulation
         game-packages
         steam
+
+        ai-module
       ];
 
       nix.settings = {
@@ -135,9 +138,6 @@
           lmms
           vital
 
-          devenv
-          direnv
-
           wl-clipboard
         ])
       ];
@@ -172,9 +172,12 @@
 
       programs = {
         ssh.startAgent = true;
+        kdeconnect.enable = true;
       };
 
       security.polkit.enable = true;
+
+      stylix.fonts.sizes.applications = lib.mkForce 13;
 
       nixpkgs.hostPlatform = "x86_64-linux";
       nixpkgs.config.allowUnfree = true;

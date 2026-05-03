@@ -18,10 +18,10 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = "bak";
 
         sharedModules = [
           inputs.plasma-manager.homeModules.plasma-manager
-          inputs.nixvim.homeModules.nixvim
         ];
 
         users.${me.username} = {
@@ -31,8 +31,12 @@
             stateVersion = "25.11";
           };
 
+          # Overrides
+          btop-use-cuda = lib.mkForce true;
+
           imports = with self.homeModules; [
             me-module
+            sddm-face
 
             btop
             cava
