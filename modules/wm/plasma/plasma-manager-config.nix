@@ -12,10 +12,15 @@
         enable = true;
 
         # Hotkeys
-        hotkeys.commands."launch-kitty" = {
-          name = "Launch Kitty";
-          key = "Meta+Ctrl+T";
-          command = "kitty";
+        # hotkeys.commands."launch-kitty" = {
+        #   name = "Launch Kitty";
+        #   key = "Meta+Ctrl+T";
+        #   command = "kitty";
+        # };
+        shortcuts = {
+          "services/kitty.desktop" = {
+            "_launch" = "Meta+Ctrl+T";
+          };
         };
 
         # Panel Setup
