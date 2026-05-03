@@ -1,5 +1,5 @@
 require("blink-cmp").setup({
-  keymap = {preset = "default"},
+  keymap = {preset = "enter"},
   signature = {enabled = true},
   sources = {
     default = {"lsp", "path", "snippets", "buffer"},

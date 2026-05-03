@@ -22,10 +22,21 @@
           ripgrep
           nixd
           nixfmt
-          lua-language-server
           stylua
           tree-sitter
           lazygit
+
+          clang-tools
+          pyright
+          ruff
+          # eslint_d
+
+          lua-language-server
+          astro-language-server
+          svelte-language-server
+          typescript-language-server
+          vscode-css-languageserver
+          tailwindcss-language-server
 
           self.packages.${pkgs.stdenv.hostPlatform.system}.ressources
         ];
@@ -62,6 +73,7 @@
             mini-pairs
             nvim-lspconfig
             telescope-nvim
+            nvim-colorizer-lua
 
             catppuccin-nvim
           ];
