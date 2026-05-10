@@ -4,13 +4,13 @@
     {
       config,
       lib,
+      options,
       ...
     }:
     let
       inherit (config) me;
     in
     {
-
       config = {
         programs.firefox = {
           enable = true;
@@ -21,10 +21,9 @@
             };
           };
         };
-
-        stylix.targets.firefox.profileNames = lib.mkIf config.stylix.enable [
-          "${me.username}"
-        ];
-      };
+      }
+      // (lib.optionalAttrs (builtins.hasAttr "stylix" options) {
+        stylix.targets.firefox.profileNames = [ "${me.username}" ];
+      });
     };
 }
