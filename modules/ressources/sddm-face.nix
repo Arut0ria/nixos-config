@@ -6,6 +6,7 @@
     {
       config = {
         home.file.".face.icon".source = lib.mkDefault "${self'.packages.ressources}/share/sddm_icon.png";
+        home.file.".face".source = lib.mkDefault "${self'.packages.ressources}/share/sddm_icon.png";
       };
     }
   );
