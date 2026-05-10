@@ -57,13 +57,13 @@
 
         plymouth = {
           enable = true;
-          theme = lib.mkForce "evangelion-ui";
+          # theme = lib.mkForce "evangelion-ui";
           themePackages = with pkgs; [
             # By default we would install all themes
             (adi1090x-plymouth-themes.override {
               selected_themes = [ "rings" ];
             })
-            inputs.evangelion-ui.packages.${pkgs.stdenv.hostPlatform.system}.evangelion-ui
+            # inputs.evangelion-ui.packages.${pkgs.stdenv.hostPlatform.system}.evangelion-ui
           ];
           extraConfig = ''
             [Daemon]
