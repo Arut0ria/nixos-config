@@ -29,6 +29,8 @@
         dlna
         pipewire
         virtualisation
+        avahi
+        printing
         devenv
 
         caching
@@ -142,9 +144,28 @@
         ])
       ];
 
-      # Adding nerd fonts for icons
-      fonts.packages =
-        [ ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+      fonts = {
+        enableDefaultPackages = true;
+        packages =
+          with pkgs;
+          [
+            noto-fonts-cjk-serif
+            noto-fonts-cjk-sans
+            noto-fonts-color-emoji
+            departure-mono
+          ]
+          # Adding nerd fonts for icons
+          ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
+        fontconfig = {
+          enable = true;
+          defaultFonts = {
+            monospace = [ "Departure Mono" ];
+            serif = [ "Noto Serif" ];
+            sansSerif = [ "Noto Sans" ];
+          };
+        };
+      };
 
       # Users
       programs.zsh.enable = true;
@@ -170,14 +191,50 @@
         settings.PasswordAuthentication = true;
       };
 
-      programs = {
-        ssh.startAgent = true;
-        kdeconnect.enable = true;
+      # programs = {
+      #   ssh.startAgent = true;
+      # };
+
+      xdg.portal = {
+        enable = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+        xdgOpenUsePortal = true;
+        config = {
+          common = {
+            default = [
+              "gtk"
+            ];
+          };
+        };
       };
 
       security.polkit.enable = true;
 
-      stylix.fonts.sizes.applications = lib.mkForce 13;
+      # specialisation = {
+      #   kde.configuration = {
+      #     imports = with self.nixosModules; [
+      #       stylix-base-config
+      #       stylix-font-config
+      #       stylix-plasma-config
+      #
+      #       kwin-effects-forceblur-overlay
+      #       plasma-kde-config
+      #     ];
+      #
+      #     programs = {
+      #       ssh.startAgent = true;
+      #     };
+      #
+      #     stylix.fonts.sizes.applications = lib.mkForce 13;
+      #   };
+      #
+      #   niri.configuration = {
+      #     programs.niri = {
+      #       enable = true;
+      #       package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+      #     };
+      #   };
+      # };
 
       nixpkgs.hostPlatform = "x86_64-linux";
       nixpkgs.config.allowUnfree = true;
