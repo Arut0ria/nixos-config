@@ -19,6 +19,7 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         backupFileExtension = "bak";
+        overwriteBackup = true;
 
         sharedModules = [
           inputs.plasma-manager.homeModules.plasma-manager
