@@ -26,10 +26,15 @@
           type = lib.types.str;
           default = "Departure Mono";
         };
+
+        configDir = lib.mkOptions {
+          type = lib.types.str;
+          default = "/tmp/noctalia";
+        };
       };
 
       config = {
-        outOfStoreConfig = lib.mkDefault "/home/theo/.config/noctalia";
+        outOfStoreConfig = configDir;
         autoCopyConfig = true;
         plugins = {
           sources = [
